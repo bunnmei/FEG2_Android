@@ -64,7 +64,7 @@ fun TempOpeButtons(
         onClick = { vm.ble(ctx = ctx) },
         visible = visible.value,
         enabled = bluetoothEnabled.value &&
-        if(Build.VERSION.SDK_INT in Build.VERSION_CODES.P .. Build.VERSION_CODES.R) {
+        if(Build.VERSION.SDK_INT in Build.VERSION_CODES.M.. Build.VERSION_CODES.R) {
             gpsEnabled.value
         } else {
             true

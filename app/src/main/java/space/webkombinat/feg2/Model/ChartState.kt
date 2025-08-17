@@ -6,7 +6,8 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import space.webkombinat.feg2.Model.Constants.ConvertFloat2ToInt
+import space.webkombinat.feg2.Model.Constants.encodeTemp
+import space.webkombinat.feg2.Model.Constants.packTemp
 import space.webkombinat.feg2.Model.DB.Chart.ChartEntity
 import space.webkombinat.feg2.Model.DB.Chart.ChartRepository
 import space.webkombinat.feg2.Model.DB.Profile.ProfileEntity
@@ -49,11 +50,13 @@ class ChartState @Inject constructor(
             try {
                 val profId = profileRepository.insertProfile(newProfile)
                 temp_f_chart.forEachIndexed { index, value ->
+                    val temp_f_encoded = encodeTemp(value)
+                    val temp_s_encoded = encodeTemp(temp_s_chart[index])
                     val newChart = ChartEntity(
                         id = 0,
                         profileId = profId,
                         pointIndex = index,
-                        temp = ConvertFloat2ToInt(value, temp_s_chart[index])
+                        temp = packTemp(temp_f_encoded, temp_s_encoded)
                     )
                     chartRepository.insertChart(newChart)
                 }

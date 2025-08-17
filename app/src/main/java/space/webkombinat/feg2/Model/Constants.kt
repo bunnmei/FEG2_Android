@@ -28,22 +28,24 @@ object Constants {
     val CHARACTERISTIC_UUID_S_CARIB_UUID: UUID = UUID.fromString(CHARACTERISTIC_UUID_S_CARIB_STRING)
     //Notif
     fun NOTIF_CONTENT_TEXT(time: String, temp_f: String, temp_s: String) = "時間 $time 温度 $temp_f°C/$temp_s°C"
-
-    //ET_tempが 253.4の場合 * 100000で25340000
-    //BT_tempが 123.3の場合 * 10で1233
-    //BT + ET で 25341233というInt型を保存する
-    fun ConvertFloat2ToInt(ET_temp: Float, BT_temp: Float): Int {
-        val et_temp = round(ET_temp * 10).toInt() * 10000
-        val bt_temp = round(BT_temp * 10).toInt()
-//        println("convert func bt-${bt_temp} et-${et_temp} calc-${et_temp+bt_temp}")
-        return (et_temp + bt_temp)
+    
+    fun encodeTemp(temp: Float): Int {
+        val scaled = (temp * 10).toInt()
+        return scaled + 2000 // -200.0℃のときを基準に合わせるため
     }
 
-    fun DeconvertIntToFloat2(temp: Int): Pair<Float, Float> {
-        val et_temp = ((temp / 10000) / 10.0f) //上三桁
-        val bt_temp = ((temp % 10000) / 10.0f)  //下三桁
-//        println("deconvert func bt-${bt_temp} et-${et_temp}")
-        return Pair(et_temp, bt_temp)
+    fun decodeTemp(encoded: Int): Float {
+        return (encoded - 2000) / 10.0f
+    }
+
+    fun packTemp(temp_f: Int, temp_s: Int): Int {
+        return (temp_f.shl(14) or temp_s)
+    }
+
+    fun unpackTemp(packed: Int): Pair<Int, Int> {
+        val temp_f = packed.shr(14)
+        val temp_s = packed.and(0x3FFF)
+        return Pair(temp_f, temp_s)
     }
 
     enum class CHARA_CARIB {

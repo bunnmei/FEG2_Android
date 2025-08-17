@@ -7,10 +7,12 @@ import android.content.Context
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -66,13 +68,13 @@ class MainActivity : ComponentActivity() {
                 }
             )
             val view = LocalView.current
-            SideEffect {
-                //  status bar
-                val window = (view.context as android.app.Activity).window
-                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDarkTheme
-                // navigation bar
-                WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !isDarkTheme
-            }
+//            SideEffect {
+//                //  status bar
+//                val window = (view.context as android.app.Activity).window
+//                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDarkTheme
+//                // navigation bar
+//                WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !isDarkTheme
+//            }
             FEG2Theme(
                 darkTheme = isDarkTheme
             ) {
@@ -127,13 +129,25 @@ fun Modifier.clickableNoRipple(
     }
 }
 
+
 fun requestPermissions(activity: Activity) {
-    var permissions: Array<String>
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        permissions = arrayOf(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.ACCESS_FINE_LOCATION)
-    } else {
-        permissions =  arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+    var permissions: Array<String> = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> arrayOf(
+            Manifest.permission.BLUETOOTH_CONNECT,
+            Manifest.permission.BLUETOOTH_SCAN,
+            Manifest.permission.ACCESS_FINE_LOCATION, // 必要なら残す
+            Manifest.permission.POST_NOTIFICATIONS
+        )
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> arrayOf(
+            Manifest.permission.BLUETOOTH_CONNECT,
+            Manifest.permission.BLUETOOTH_SCAN,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        else -> arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
     }
+
     ActivityCompat.requestPermissions(
         activity,
         permissions,
@@ -152,8 +166,19 @@ fun bleAdapter(context: Context) : Boolean {
 fun gpsAdapter(context: Context) : Boolean {
     val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-    if(isGpsEnabled){
-        return true
-    }
-    return false
+    println("GPS State ${isGpsEnabled}")
+        return if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            locationManager.isLocationEnabled
+        } else {
+            return try {
+                val mode = Settings.Secure.getInt(
+                    context.contentResolver,
+                    Settings.Secure.LOCATION_MODE,
+                    Settings.Secure.LOCATION_MODE_OFF
+                )
+                mode != Settings.Secure.LOCATION_MODE_OFF
+            } catch (e: Exception) {
+                false
+            }
+        }
 }

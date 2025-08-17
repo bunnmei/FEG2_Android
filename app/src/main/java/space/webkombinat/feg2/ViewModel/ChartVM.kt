@@ -22,11 +22,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import space.webkombinat.feg2.Model.AppTheme
 import space.webkombinat.feg2.Model.BLEController
 import space.webkombinat.feg2.Model.BackgroundService
 import space.webkombinat.feg2.Model.ChartState
-import space.webkombinat.feg2.Model.Constants.DeconvertIntToFloat2
+import space.webkombinat.feg2.Model.Constants.decodeTemp
+import space.webkombinat.feg2.Model.Constants.unpackTemp
 import space.webkombinat.feg2.Model.DB.Profile.ProfileRepository
 import space.webkombinat.feg2.Model.StopWatch
 import space.webkombinat.feg2.Model.UserPreferencesRepository
@@ -125,9 +125,9 @@ class ChartVM @Inject constructor(
             val temp_f = mutableStateListOf<Float>()
             val temp_s = mutableStateListOf<Float>()
             profile.chart.sortedBy { it.pointIndex }.forEach { chart ->
-                val temp = DeconvertIntToFloat2(temp = chart.temp)
-                temp_f.add(temp.first)
-                temp_s.add(temp.second)
+                val temps = unpackTemp(chart.temp)
+                temp_f.add(decodeTemp(temps.first))
+                temp_s.add(decodeTemp(temps.second))
             }
             _profileLinkChart.value = LogDetailVM.UiState(
                 profile = profile,

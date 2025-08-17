@@ -207,7 +207,7 @@ fun SettingScreen(
                         )
                     }
                 }
-                if(Build.VERSION.SDK_INT in Build.VERSION_CODES.P .. Build.VERSION_CODES.R) {
+                if(Build.VERSION.SDK_INT in Build.VERSION_CODES.M .. Build.VERSION_CODES.R) {
                     Row(
                         modifier = modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -271,7 +271,8 @@ fun SettingScreen(
                             }
                         }
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    maxLines = 1
                 )
                 Spacer(modifier = modifier.width(16.dp))
                 Button(
@@ -318,7 +319,8 @@ fun SettingScreen(
                             }
                         }
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    maxLines = 1
                 )
                 Spacer(modifier = modifier.width(16.dp))
                 Button(
