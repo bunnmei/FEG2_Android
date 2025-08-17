@@ -1,5 +1,6 @@
 package space.webkombinat.feg2.View.Screen
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,44 +36,50 @@ fun LogListScreen(
     val profiles by vm.profiles.collectAsState(emptyList())
     val profileId by vm.profileId.collectAsState(initial = -1)
     val ctx = LocalContext.current
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize(),
+    val columnModifier = if(ctx.getScreenSize().first > 600) {modifier.width(600.dp)} else {modifier.fillMaxWidth()}
+
+    Column(
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
-            Spacer(modifier = modifier.height((ctx.getScreenSize().first / 20).dp))
-        }
-        if (profiles.isEmpty()) {
+        LazyColumn(
+            modifier = columnModifier,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             item {
+                Spacer(modifier = modifier.height((ctx.getScreenSize().first / 20).dp))
+            }
+            if (profiles.isEmpty()) {
+                item {
+                    ProfileCard(
+                        name = "No Profile",
+                        description = "保存されているプロファイルはありません。",
+                        navNext = {},
+                        rmProfileId = {},
+                        createAt = -1L,
+                        profileId = -1L,
+                        keptProfileId = -1L
+                    )
+                }
+            }
+            items(profiles) {profiles ->
                 ProfileCard(
-                    name = "No Profile",
-                    description = "保存されているプロファイルはありません。",
-                    navNext = {},
-                    rmProfileId = {},
-                    createAt = -1L,
-                    profileId = -1L,
-                    keptProfileId = -1L
+                    name = profiles.name,
+                    description = profiles.description,
+                    navNext = {
+                        navCont.navigate("/logDetail/${profiles.id}")
+                    },
+                    rmProfileId = {
+                        vm.clearProfileId()
+                    },
+                    createAt = profiles.createAt,
+                    profileId = profiles.id,
+                    keptProfileId = profileId
                 )
             }
-        }
-        items(profiles) {profiles ->
-            ProfileCard(
-                name = profiles.name,
-                description = profiles.description,
-                navNext = {
-                    navCont.navigate("/logDetail/${profiles.id}")
-                },
-                rmProfileId = {
-                    vm.clearProfileId()
-                },
-                createAt = profiles.createAt,
-                profileId = profiles.id,
-                keptProfileId = profileId
-            )
-        }
-        item {
-            Spacer(modifier = modifier.height( 60.dp ))
+            item {
+                Spacer(modifier = modifier.height( 60.dp ))
+            }
         }
     }
 }
