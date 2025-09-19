@@ -58,7 +58,8 @@ class BLETaskQueue(
             is BleCommand.WriteNotif -> {
                 gattHolder.setCharacteristicNotification(command.characteristic, true)
                 val descriptor = command.characteristic.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
-                descriptor.value = BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
+//                descriptor.value = BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
+                descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                 gattHolder.writeDescriptor(descriptor)
             }
         }

@@ -71,7 +71,7 @@ class BLEController @Inject constructor(
     val temp_s_state = _temp_s.asStateFlow()
     var BLE_STATE: MutableState<BLE_STATUS> = mutableStateOf(BLE_STATUS.DISCONNECTED)
 
-
+    private var number = 0;
     fun resetTemp() {
         _temp_f.value = 0.0f
         _temp_s.value = 0.0f
@@ -284,7 +284,7 @@ class BLEController @Inject constructor(
             characteristic: BluetoothGattCharacteristic?
         ) {
             super.onCharacteristicChanged(gatt, characteristic)
-            println("onCharacteristicChangedがよびだされたよ")
+            println("onCharacteristicChangedがよびだされたよ counter ${number}")
             // 値を取得
             if (characteristic != null) {
                 val current_value = floatFrom8ByteArray(characteristic.value)
@@ -293,6 +293,7 @@ class BLEController @Inject constructor(
                 } else if(characteristic.uuid.toString() == CHARACTERISTIC_UUID_S_STRING){
                    _temp_s.value = current_value
                 }
+                number += 1
             }
         }
 
@@ -307,21 +308,23 @@ class BLEController @Inject constructor(
             if (characteristic != null) {
                 when(characteristic.uuid.toString()) {
                     CHARACTERISTIC_UUID_BRIGHTNESS_STRING -> {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val brightness = ByteBuffer.wrap(characteristic.value).short.toInt()
-                            userPreferences.saveBrightness(brightness)
+                        CoroutineScope(Dispatchers.Main).launch {
+                            val data: ByteArray = characteristic.value
+                            println("read brightness ${characteristic.value} - ${data[0].toInt() and 0xFF}")
+//                            val brightness = ByteBuffer.wrap(characteristic.value).short.toInt()
+//                            userPreferences.saveBrightness(brightness)
                         }
                     }
                     CHARACTERISTIC_UUID_F_CARIB_STRING -> {
                         CoroutineScope(Dispatchers.IO).launch {
-                            val temp = ByteBuffer.wrap(characteristic.value).order(ByteOrder.LITTLE_ENDIAN).short.toInt()
-                            userPreferences.saveCaribF(temp)
+//                            val temp = ByteBuffer.wrap(characteristic.value).order(ByteOrder.LITTLE_ENDIAN).short.toInt()
+//                            userPreferences.saveCaribF(temp)
                         }
                     }
                     CHARACTERISTIC_UUID_S_CARIB_STRING -> {
                         CoroutineScope(Dispatchers.IO).launch {
-                            val temp = ByteBuffer.wrap(characteristic.value).order(ByteOrder.LITTLE_ENDIAN).short.toInt()
-                            userPreferences.saveCaribS(temp)
+//                            val temp = ByteBuffer.wrap(characteristic.value).order(ByteOrder.LITTLE_ENDIAN).short.toInt()
+//                            userPreferences.saveCaribS(temp)
                         }
                     }
                 }
@@ -376,17 +379,29 @@ class BLEController @Inject constructor(
     }
 
     fun floatFrom8ByteArray(value: ByteArray): Float {
-        if(value.size != 8) return 0.0f
-        return Float.fromBits(
-            (value[7].toInt() and 0xff shl 56) or
-                    (value[6].toInt() and 0xff shl 48) or
-                    (value[5].toInt() and 0xff shl 40) or
-                    (value[4].toInt() and 0xff shl 32) or
-                    (value[3].toInt() and 0xff shl 24) or
+        if(value.size == 8) {
+            return Float.fromBits(
+                (value[7].toInt() and 0xff shl 56) or
+                        (value[6].toInt() and 0xff shl 48) or
+                        (value[5].toInt() and 0xff shl 40) or
+                        (value[4].toInt() and 0xff shl 32) or
+                        (value[3].toInt() and 0xff shl 24) or
+                        (value[2].toInt() and 0xff shl 16) or
+                        (value[1].toInt() and 0xff shl 8) or
+                        (value[0].toInt() and 0xff)
+            )
+        } else if (value.size == 4) {
+
+            return Float.fromBits(
+            (value[3].toInt() and 0xff shl 24) or
                     (value[2].toInt() and 0xff shl 16) or
                     (value[1].toInt() and 0xff shl 8) or
                     (value[0].toInt() and 0xff)
-        )
+            )
+        } else {
+            return 0.0f
+        }
+
     }
 
     //CONNECT BLE DEVICE -end-

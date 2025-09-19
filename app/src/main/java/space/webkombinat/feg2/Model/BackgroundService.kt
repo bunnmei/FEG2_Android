@@ -12,12 +12,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.sample
+import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,13 +36,15 @@ class BackgroundService: Service() {
     override fun onCreate() {
         super.onCreate()
         serviceScope.launch {
-            bleController.temp_f_state.combine(bleController.temp_s_state) { temp_f, temp_s ->
+            bleController.temp_f_state.zip(bleController.temp_s_state) { temp_f, temp_s ->
+                Pair(temp_f, temp_s)
+            }.collect { (temp_f, temp_s) ->
                 if (
                     bleController.BLE_STATE.value == BLEController.BLE_STATUS.CONNECTED &&
                     (stopWatch.state.value == StopWatch.StopWatchState.STOPED ||
                             stopWatch.state.value == StopWatch.StopWatchState.PAUSED)
                 ) {
-                    println("update notification Service Class")
+                    println("update notification Service Class bgservice")
                     notif.notifUpdate(
                         time = stopWatch.displayTime.value.slice(0..4),
                         temp_f = "%.1f".format(temp_f),
@@ -47,7 +52,8 @@ class BackgroundService: Service() {
                     )
                 }
             }
-            .collect()
+
+
         }
     }
 
@@ -127,6 +133,13 @@ class BackgroundService: Service() {
     override fun onTaskRemoved(rootIntent: Intent?) {
         println("onTaskRemovedがよばれたよ")
         super.onTaskRemoved(rootIntent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Serviceが破棄されるときに、このスコープで起動したすべてのコルーチンをキャンセルする
+        serviceScope.cancel()
+        println("Service destroyed and scope cancelled.")
     }
 
     enum class Action {
