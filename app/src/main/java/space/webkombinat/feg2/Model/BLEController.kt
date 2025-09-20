@@ -310,21 +310,21 @@ class BLEController @Inject constructor(
                     CHARACTERISTIC_UUID_BRIGHTNESS_STRING -> {
                         CoroutineScope(Dispatchers.Main).launch {
                             val data: ByteArray = characteristic.value
-                            println("read brightness ${characteristic.value} - ${data[0].toInt() and 0xFF}")
-//                            val brightness = ByteBuffer.wrap(characteristic.value).short.toInt()
-//                            userPreferences.saveBrightness(brightness)
+                            println("read brightness ${characteristic.value} - ${data[0].toInt()}")
+                            userPreferences.saveBrightness(data[0].toInt())
                         }
                     }
                     CHARACTERISTIC_UUID_F_CARIB_STRING -> {
                         CoroutineScope(Dispatchers.IO).launch {
-//                            val temp = ByteBuffer.wrap(characteristic.value).order(ByteOrder.LITTLE_ENDIAN).short.toInt()
-//                            userPreferences.saveCaribF(temp)
+                            val data: ByteArray = characteristic.value
+                            println("read carib data ${data[0].toInt()}")
+                            userPreferences.saveCaribF(data[0].toInt())
                         }
                     }
                     CHARACTERISTIC_UUID_S_CARIB_STRING -> {
                         CoroutineScope(Dispatchers.IO).launch {
-//                            val temp = ByteBuffer.wrap(characteristic.value).order(ByteOrder.LITTLE_ENDIAN).short.toInt()
-//                            userPreferences.saveCaribS(temp)
+                            val data: ByteArray = characteristic.value
+                            userPreferences.saveCaribS(data[0].toInt())
                         }
                     }
                 }
@@ -337,11 +337,33 @@ class BLEController @Inject constructor(
         @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
         override fun onCharacteristicWrite(
             gatt: BluetoothGatt?,
-            characteristic: BluetoothGattCharacteristic?,
+            characteristic: BluetoothGattCharacteristic,
             status: Int
         ) {
             super.onCharacteristicWrite(gatt, characteristic, status)
             println("書き込みが完了しました。")
+            val data: ByteArray = characteristic.value
+
+            if(characteristic.uuid.toString() == CHARACTERISTIC_UUID_BRIGHTNESS_STRING){
+                println("brightness書き込み完了 ${data[0].toInt()}")
+                CoroutineScope(Dispatchers.IO).launch {
+                    userPreferences.saveBrightness(data[0].toInt())
+                }
+            }
+            if(characteristic.uuid.toString() == CHARACTERISTIC_UUID_F_CARIB_STRING) {
+                println("chara_f書き込み完了 ${data[0].toInt()}")
+                CoroutineScope(Dispatchers.IO).launch {
+                    userPreferences.saveCaribF(data[0].toInt())
+                }
+            }
+
+            if(characteristic.uuid.toString() == CHARACTERISTIC_UUID_S_CARIB_STRING) {
+
+                println("chara_s書き込み完了 ${data[0].toInt()}")
+                CoroutineScope(Dispatchers.IO).launch {
+                    userPreferences.saveCaribS(data[0].toInt())
+                }
+            }
             BLEtaskQueue?.onOperationFinishedCheck {
                 BLE_STATE.value = BLE_STATUS.CONNECTED
             }
@@ -364,15 +386,9 @@ class BLEController @Inject constructor(
         when(type) {
             Constants.CHARA_CARIB.TEMP_F -> {
                 BLEtaskQueue?.queueWrite(characteristicTempCarib_F!!, byteArrayOf(carib.toByte()))
-                CoroutineScope(Dispatchers.IO).launch {
-                    userPreferences.saveCaribF(carib)
-                }
             }
             Constants.CHARA_CARIB.TEMP_S -> {
                 BLEtaskQueue?.queueWrite(characteristicTempCarib_S!!, byteArrayOf(carib.toByte()))
-                CoroutineScope(Dispatchers.IO).launch {
-                    userPreferences.saveCaribS(carib)
-                }
             }
         }
         BLEtaskQueue?.onOperationFinishedCheck{}
