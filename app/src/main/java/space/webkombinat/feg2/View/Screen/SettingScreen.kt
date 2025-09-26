@@ -188,6 +188,24 @@ fun SettingScreen(
                             text = BLE_Addr
                         )
                     }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .height(70.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if(vm.bleController.deviceName.value != "" && vm.bleController.deviceVersion.value != "") {
+                            Text(
+                                text = "${vm.bleController.deviceName.value} - v${vm.bleController.deviceVersion.value}"
+                            )
+                        } else {
+                            Text(
+                                text = "デバイス未接続"
+                            )
+                        }
+                    }
                 }
 
                 SettingPanel(

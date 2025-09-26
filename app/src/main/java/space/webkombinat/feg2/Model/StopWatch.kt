@@ -31,6 +31,12 @@ class StopWatch @Inject constructor(
     fun start() {
         if (state.value == StopWatchState.STARTED) return
         state.value = StopWatchState.STARTED
+        if (!notif.notifCreated){
+            Intent(context, BackgroundService::class.java).also { intent ->
+                intent.action = BackgroundService.Action.NOTIF_START.toString()
+                context.startService(intent)
+            }
+        }
 
         displayTimer = fixedRateTimer(initialDelay = 0L, period = 10L) {
             time = time.plus(10.milliseconds)
@@ -43,6 +49,7 @@ class StopWatch @Inject constructor(
                     bleController.BLE_STATE.value == BLEController.BLE_STATUS.CONNECTED ||
                     state.value == StopWatch.StopWatchState.STARTED
                     ) {
+
                     notif.notifUpdate(
                         time = displayTime.value.slice(0..4),
                         temp_f = "%.1f".format(bleController.temp_f_state.value),
@@ -65,6 +72,13 @@ class StopWatch @Inject constructor(
         if (state.value == StopWatchState.PAUSED) return
         state.value = StopWatchState.PAUSED
         displayTimer?.cancel()
+
+        if (bleController.BLE_STATE.value != BLE_STATUS.CONNECTED) {
+            Intent(context, BackgroundService::class.java).also { intent ->
+                intent.action = BackgroundService.Action.NOTIF_STOP.toString()
+                context.startService(intent)
+            }
+        }
     }
 
     fun clear() {

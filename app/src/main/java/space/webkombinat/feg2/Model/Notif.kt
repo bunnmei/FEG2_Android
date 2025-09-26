@@ -23,12 +23,15 @@ class Notif @Inject constructor (
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
 
+    var notifCreated = false
+        private set
+
     val notificationPending = PendingIntent.getService(
         context,
         0,
         Intent(context, BackgroundService::class.java).also { intent ->
             intent.action = BackgroundService.Action.NOTIF_STOP.toString()
-            context.startService(intent)
+//            context.startService(intent)
         },
         PendingIntent.FLAG_IMMUTABLE
     )
@@ -42,15 +45,23 @@ class Notif @Inject constructor (
         .setContentIntent(resultPendingIntent)
 
     fun notifCreate() {
+        if (notifCreated) return
+        notifCreated = true
         val channel = NotificationChannel(
             "running_channel",
             "Running Notifications",
             NotificationManager.IMPORTANCE_MIN
         )
+        println("called notifCreate")
         notifManager.createNotificationChannel(channel)
     }
 
+    fun delete() {
+        notifCreated = false
+    }
+
     fun notifUpdate(time: String, temp_f: String, temp_s: String) {
+        println("notifUpdateCalled")
         notifManager.notify(
             1,
             notifBuilder

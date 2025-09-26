@@ -13,6 +13,7 @@ import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.compose.runtime.MutableState
@@ -70,6 +71,9 @@ class BLEController @Inject constructor(
     private val _temp_s = MutableStateFlow(0.0f)
     val temp_s_state = _temp_s.asStateFlow()
     var BLE_STATE: MutableState<BLE_STATUS> = mutableStateOf(BLE_STATUS.DISCONNECTED)
+
+    val deviceName = mutableStateOf("")
+    val deviceVersion = mutableStateOf("")
 
     private var number = 0;
     fun resetTemp() {
@@ -194,6 +198,8 @@ class BLEController @Inject constructor(
                     characteristicBrightness = null
                     characteristicTempCarib_F = null
                     characteristicTempCarib_S = null
+                    deviceName.value = ""
+                    deviceVersion.value = ""
                     if(BLE_STATE.value == BLE_STATUS.DISCONNECTING) {
                         BLE_STATE.value = BLE_STATUS.DISCONNECTED
                     }
@@ -234,6 +240,24 @@ class BLEController @Inject constructor(
             }
 
             services.forEach { service ->
+                if(service.uuid.toString() == "0000180a-0000-1000-8000-00805f9b34fb") {
+                    service.characteristics.forEach { chara ->
+                        if(chara.uuid.toString() == "00002a26-0000-1000-8000-00805f9b34fb") {
+                            val version = service?.getCharacteristic(UUID.fromString("00002a26-0000-1000-8000-00805f9b34fb"))
+                            println("v read queue")
+                            BLEtaskQueue?.queueRead(version!!)
+                        }
+                    }
+                }
+                if (service.uuid.toString() == "00001800-0000-1000-8000-00805f9b34fb"){
+                    service.characteristics.forEach { chara ->
+                        if(chara.uuid.toString() == "00002a00-0000-1000-8000-00805f9b34fb") {
+                            val name = service?.getCharacteristic(UUID.fromString("00002a00-0000-1000-8000-00805f9b34fb"))
+                            BLEtaskQueue?.queueRead(name!!)
+                        }
+                    }
+                }
+
                 if (service.uuid.toString() == SERVICE_UUID) {
                     service.characteristics.forEach { chara ->
                         if (chara.uuid.toString() == CHARACTERISTIC_UUID_F_STRING) {
@@ -261,6 +285,10 @@ class BLEController @Inject constructor(
                 }
             }
             println("すべてのキャラクタリスティックの読み取り完了")
+            Intent(context, BackgroundService::class.java).also { intent ->
+                intent.action = BackgroundService.Action.NOTIF_START.toString()
+                context.startService(intent)
+            }
             BLEtaskQueue?.onOperationFinishedCheck {
                 BLE_STATE.value = BLE_STATUS.CONNECTED
             }
@@ -289,9 +317,13 @@ class BLEController @Inject constructor(
             if (characteristic != null) {
                 val current_value = floatFrom8ByteArray(characteristic.value)
                 if(characteristic.uuid.toString() == CHARACTERISTIC_UUID_F_STRING){
-                   _temp_f.value = current_value
+                    if (!current_value.isNaN()) {
+                        _temp_f.value = current_value
+                    }
                 } else if(characteristic.uuid.toString() == CHARACTERISTIC_UUID_S_STRING){
-                   _temp_s.value = current_value
+                    if (!current_value.isNaN()) {
+                        _temp_s.value = current_value
+                    }
                 }
                 number += 1
             }
@@ -326,6 +358,19 @@ class BLEController @Inject constructor(
                             val data: ByteArray = characteristic.value
                             userPreferences.saveCaribS(data[0].toInt())
                         }
+                    }
+
+                    "00002a00-0000-1000-8000-00805f9b34fb" -> {
+//                        val deviceName = String(characteristic.value)
+                        val deviceLocalName = characteristic.getStringValue(0);
+                        deviceName.value = deviceLocalName
+
+                        println("gatt 接続後の名前の確認 - ${deviceLocalName}")
+                    }
+                    "00002a26-0000-1000-8000-00805f9b34fb" -> {
+                        val deviceVer = String(characteristic.value)
+                        deviceVersion.value = deviceVer
+                        println("gatt 接続後のバージョン確認 - ${deviceVer}")
                     }
                 }
                 BLEtaskQueue?.onOperationFinishedCheck {

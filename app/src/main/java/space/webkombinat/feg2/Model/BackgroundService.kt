@@ -39,12 +39,15 @@ class BackgroundService: Service() {
             bleController.temp_f_state.zip(bleController.temp_s_state) { temp_f, temp_s ->
                 Pair(temp_f, temp_s)
             }.collect { (temp_f, temp_s) ->
+
+
                 if (
                     bleController.BLE_STATE.value == BLEController.BLE_STATUS.CONNECTED &&
                     (stopWatch.state.value == StopWatch.StopWatchState.STOPED ||
                             stopWatch.state.value == StopWatch.StopWatchState.PAUSED)
                 ) {
                     println("update notification Service Class bgservice")
+
                     notif.notifUpdate(
                         time = stopWatch.displayTime.value.slice(0..4),
                         temp_f = "%.1f".format(temp_f),
@@ -62,6 +65,7 @@ class BackgroundService: Service() {
 
     @RequiresPermission(allOf = arrayOf(Manifest.permission.BLUETOOTH_CONNECT,Manifest.permission.BLUETOOTH_SCAN))
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        println("onStartCommand action=${intent?.action}")
         when(intent?.action) {
             Action.DEBUG.toString() -> {
                 println("Service running DEBUG Intent")
@@ -71,7 +75,6 @@ class BackgroundService: Service() {
                     BLEController.BLE_STATUS.SCANNING -> {
                         println("BGS BLE_STATE STOPSCANNING")
                         bleController.stopScanBLE(scanTiming = "user_scan_cancel")
-                        stopForegroundService()
                     }
                     BLEController.BLE_STATUS.CONNECTED -> {
                         println("BGS BLE_STATE DISCONNECTING")
@@ -79,17 +82,13 @@ class BackgroundService: Service() {
                         if (stopWatch.state.value == StopWatch.StopWatchState.STOPED) {
                             bleController.resetTemp()
                         }
-                        stopForegroundService()
+                        if (stopWatch.state.value != StopWatch.StopWatchState.STARTED) {
+                            stopForegroundService()
+                        }
                     }
                     BLEController.BLE_STATUS.DISCONNECTED -> {
                         println("BGS BLE_STATE SCANNING")
                         bleController.startScanBLE()
-                        notif.notifCreate()
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            startForeground(1, notif.notifBuilder.build(), FOREGROUND_SERVICE_TYPE_DATA_SYNC)
-                        } else{
-                            startForeground(1, notif.notifBuilder.build())
-                        }
                     }
 
                     BLEController.BLE_STATUS.DISCONNECTING -> {
@@ -97,6 +96,14 @@ class BackgroundService: Service() {
                     }
                 }
             }
+
+            Action.NOTIF_START.toString() -> {
+                if (!notif.notifCreated){
+                    notif.notifCreate()
+                    notifStart()
+                }
+            }
+
             Action.NOTIF_STOP.toString() -> {
                 bleController.disconnectBLE()
                 when(stopWatch.state.value) {
@@ -120,11 +127,20 @@ class BackgroundService: Service() {
         return START_NOT_STICKY
     }
 
+    private fun notifStart(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(1, notif.notifBuilder.build(), FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        } else{
+            startForeground(1, notif.notifBuilder.build())
+        }
+    }
+
     private fun stopForegroundService() {
         CoroutineScope(Dispatchers.IO).launch {
             delay(1000) //serviceStop後に、notif.updateが呼ばれるのを防ぐため
             println("stopForegroundServiceがよばれたよ")
             stopForeground(STOP_FOREGROUND_REMOVE)
+            notif.delete();
             stopSelf()
         }
     }
@@ -145,6 +161,7 @@ class BackgroundService: Service() {
         DEBUG,
         BLE_START,
         NOTIF_STOP,
+        NOTIF_START,
         MAX_TIME,
     }
 
