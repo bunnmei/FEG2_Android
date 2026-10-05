@@ -1,5 +1,7 @@
 package space.webkombinat.feg2.ViewModel
 
+import android.content.ContentResolver
+import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.SavedStateHandle
@@ -15,12 +17,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import space.webkombinat.feg2.Model.Constants.decodeTemp
 import space.webkombinat.feg2.Model.Constants.unpackTemp
 import space.webkombinat.feg2.Model.DB.Chart.ChartRepository
 import space.webkombinat.feg2.Model.DB.Profile.ProfileRepository
 import space.webkombinat.feg2.Model.DB.ProfileLinkChart
 import space.webkombinat.feg2.Model.UserPreferencesRepository
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @HiltViewModel
 class LogDetailVM @Inject constructor(
@@ -96,6 +102,37 @@ class LogDetailVM @Inject constructor(
             _deleteProfileState.value = DeleteProfileState.Deleted
         }
 
+    }
+
+    fun csvFileName(): String {
+        val profile = profileLinkChart.value.profile?.profile
+        val date = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.JAPAN)
+            .format(Date(profile?.createAt ?: System.currentTimeMillis()))
+        val name = profile?.name
+            ?.replace(Regex("[\\\\/:*?\"<>|]"), "_")
+            ?.takeIf { it.isNotBlank() }
+        return if (name != null) "${name}_$date.csv" else "profile${profileId}_$date.csv"
+    }
+
+    fun exportCsv(contentResolver: ContentResolver, uri: Uri, onResult: (Boolean) -> Unit) {
+        val state = profileLinkChart.value
+        viewModelScope.launch(Dispatchers.IO) {
+            val success = try {
+                contentResolver.openOutputStream(uri)?.bufferedWriter(Charsets.UTF_8)?.use { writer ->
+                    writer.write("\uFEFF") // Excelで文字化けしないようにBOMを付ける
+                    writer.write("経過秒,時間,温度F(℃),温度S(℃)\r\n")
+                    state.temp_f.forEachIndexed { sec, tempF ->
+                        val tempS = state.temp_s.getOrNull(sec) ?: return@forEachIndexed
+                        val time = "%02d:%02d".format(sec / 60, sec % 60)
+                        writer.write("$sec,$time,$tempF,$tempS\r\n")
+                    }
+                } != null
+            } catch (e: Exception) {
+                println(e)
+                false
+            }
+            withContext(Dispatchers.Main) { onResult(success) }
+        }
     }
 
     data class UiState(

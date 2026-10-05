@@ -1,5 +1,8 @@
 package space.webkombinat.feg2.View.Screen
 
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -28,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,6 +57,17 @@ fun LogDetailScreen(
     val uiState by vm.profileLinkChart.collectAsState()
     val range by vm.userSettings.collectAsState()
     val deleteProfileState by vm.deleteProfileState.collectAsState()
+    val context = LocalContext.current
+    val csvLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("text/csv")
+    ) { uri ->
+        if (uri != null) {
+            vm.exportCsv(context.contentResolver, uri) { success ->
+                val msg = if (success) "CSVを書き出しました" else "CSVの書き出しに失敗しました"
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     Box(
         modifier = modifier
@@ -105,6 +121,13 @@ fun LogDetailScreen(
                                     navCont.navigate("/logEdit/${vm.profileId}")
                                 }) {
                                     Icon(imageVector = Icons.Default.Edit, contentDescription = "edit profile")
+                                }
+                                Spacer(modifier = modifier.height(16.dp))
+
+                                OpeBtn(onClick = {
+                                    csvLauncher.launch(vm.csvFileName())
+                                }) {
+                                    Icon(imageVector = Icons.Default.FileDownload, contentDescription = "export csv")
                                 }
                             }
                             TimeMemoryCanvas(scrollState = scrollState)

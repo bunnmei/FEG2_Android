@@ -7,15 +7,9 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +17,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
@@ -42,17 +35,12 @@ import space.webkombinat.feg2.View.Screen.ChartScreen
 import space.webkombinat.feg2.View.Screen.LogDetailScreen
 import space.webkombinat.feg2.View.Screen.LogEditScreen
 import space.webkombinat.feg2.View.Screen.LogListScreen
-import space.webkombinat.feg2.View.Screen.LoginScreen
 import space.webkombinat.feg2.View.Screen.SettingScreen
 import space.webkombinat.feg2.ViewModel.ChartVM
 import space.webkombinat.feg2.ViewModel.LogDetailVM
 import space.webkombinat.feg2.ViewModel.LogEditVM
 import space.webkombinat.feg2.ViewModel.LogListVM
 import space.webkombinat.feg2.ViewModel.SettingVM
-
-import space.webkombinat.feg2.R
-import space.webkombinat.feg2.View.Screen.LoginSuccessScreen
-
 
 @RequiresPermission(android.Manifest.permission.BLUETOOTH_SCAN)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -113,52 +101,8 @@ fun Navigation(modifier: Modifier = Modifier) {
                 route = BottomNavItem.Setting.route,
             ){
                 val vm = hiltViewModel<SettingVM>()
-                Box(
-                    modifier = modifier.fillMaxSize()
-                ) {
-                    SettingScreen(vm = vm)
-                    Column(
-                        modifier = modifier.fillMaxSize()
-                    ) {
-//                        Spacer(modifier = modifier.weight(1f))
-                        Row {
-//                            Spacer(modifier = modifier.weight(1f))
-                            Button(
-                                onClick = {
-                                    navCont.navigate(
-                                        route = "login"
-                                    )
-                                }
-                            ) {
-                                Text("ログイン")
-                            }
-                        }
-                    }
-                }
+                SettingScreen(vm = vm)
             }
-
-            composable(
-                route = "login")
-            {
-                LoginScreen(
-                    web_google_key = stringResource(R.string.default_web_client_id),
-                    nav = {
-                        navCont.navigate(
-                            route = "login_success"
-                        )
-                    }
-                )
-            }
-            composable(
-                route = "login_success")
-            {
-                LoginSuccessScreen(logout = {
-                    navCont.navigate(
-                        route = "login"
-                    )
-                })
-            }
-
 
         }
     }
