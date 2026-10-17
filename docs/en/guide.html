@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guide — FEG2</title>
+  <meta name="description" content="How to use FEG2: connecting the device, recording and saving temperatures, the log and CSV export, settings, and troubleshooting.">
+  <link rel="icon" href="../img/icon.webp">
+  <link rel="alternate" hreflang="ja" href="../ja/guide.html">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="./"><img src="../img/icon.webp" alt="">FEG2</a>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="guide.html" aria-current="page">Guide</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+      <a class="lang-switch" href="../ja/guide.html" hreflang="ja" lang="ja" data-set-lang="ja"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.08 16zm2.95-8H5.08a7.99 7.99 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>日本語</a>
+    </div>
+  </header>
+
+  <main>
+    <h1 class="page-title">Guide</h1>
+    <p class="page-meta">FEG2 / Android 8.0 or later</p>
+
+    <div class="summary">
+      <p><strong>The basic flow:</strong> connect with the Bluetooth button → start recording with ▶ → stop with ⏸ and press Save → review it in the LOG tab.</p>
+    </div>
+
+    <nav class="toc" aria-label="Contents">
+      <div class="toc__title">On this page</div>
+      <ol>
+        <li><a href="#prepare">Getting started (permissions and Bluetooth)</a></li>
+        <li><a href="#connect">Connect the device</a></li>
+        <li><a href="#record">Record temperatures</a></li>
+        <li><a href="#screen">Reading the CHART screen</a></li>
+        <li><a href="#log">Review records (LOG)</a></li>
+        <li><a href="#setting">Settings (SETTING)</a></li>
+        <li><a href="#trouble">Troubleshooting</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="prepare">1. Getting started (permissions and Bluetooth)</h2>
+    <ol class="steps">
+      <li><strong>Open the app and allow the permissions</strong>On first launch the app asks for permissions such as Nearby devices and Notifications. They are needed to find and connect to the device.</li>
+      <li><strong>Turn Bluetooth on</strong>The connect button is disabled while Bluetooth is off.</li>
+      <li><strong>(Android 11 and earlier only) Turn Location on</strong>On Android 11 and earlier, Android requires Location (GPS) to be on to scan for Bluetooth devices. The app does not use your location.</li>
+    </ol>
+    <p>If you denied a permission, you can ask for it again later from SETTING → Permissions → Request permissions.</p>
+
+    <h2 id="connect">2. Connect the device</h2>
+    <ol class="steps">
+      <li><strong>Turn on the FEG2 thermometer</strong></li>
+      <li><strong>In the CHART tab, press the “+” button at the bottom left</strong>The control buttons (Bluetooth, ▶, Save, Reset) appear above it.</li>
+      <li><strong>Press the Bluetooth button</strong>The icon changes while the app searches, and it connects automatically when it finds the device. Once connected, the temperatures appear at the top right.</li>
+    </ol>
+    <div class="callout">
+      <span class="callout__title">The app remembers your device</span>
+      <p>The first device you connect to is remembered, and from then on the app connects only to that device. To switch to another device, <strong>long-press</strong> the BLE device row in the SETTING tab to forget it.</p>
+    </div>
+    <p>Pressing the Bluetooth button while connected disconnects. Pressing it while searching stops the search.</p>
+
+    <h2 id="record">3. Record temperatures</h2>
+    <ol class="steps">
+      <li><strong>Press ▶ to start recording</strong>The stopwatch starts and both temperatures are added to the graph once per second.</li>
+      <li><strong>Press ⏸ to stop</strong>Press ▶ again to continue from where you stopped.</li>
+      <li><strong>Press Save (↓) to save</strong>Available only while stopped. “Saving” is shown, and the record is added to the LOG tab when it finishes.</li>
+      <li><strong>Press Reset (↻) to start over</strong>While stopped, this clears the time and the graph. Unsaved data is cleared too.</li>
+    </ol>
+    <div class="callout callout--warn">
+      <span class="callout__title">Records are limited to 30 minutes</span>
+      <p>After 30 minutes recording stops automatically and the record so far is saved.</p>
+    </div>
+    <p>Recording continues when you close the app or switch to another app, and the elapsed time and temperatures are shown in the notification. Pressing “Stop” in the notification disconnects the device and ends the recording. <strong>Unsaved data is lost</strong> when you do this.</p>
+
+    <h2 id="screen">4. Reading the CHART screen</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Where</th><th>What it shows</th></tr></thead>
+        <tbody>
+          <tr><td>Top right</td><td>Elapsed time (gray), temperature 1 (pink), temperature 2 (blue)</td></tr>
+          <tr><td>Left edge</td><td>Temperature scale (the range can be changed in SETTING)</td></tr>
+          <tr><td>Bottom</td><td>Time scale. The graph scrolls horizontally</td></tr>
+          <tr><td>Faint lines on the graph</td><td>The bookmarked record (reference), set in <a href="#log">LOG</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Tap an empty part of the screen to hide the tabs and buttons and see more of the graph. Tap again to bring them back.</p>
+
+    <h2 id="log">5. Review records (LOG)</h2>
+    <p>Saved records are listed as cards in the LOG tab. Tap a card to open its graph. The buttons on the right do the following.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Button</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Delete (trash)</td><td>Deletes the record. <strong>It is deleted immediately, without confirmation.</strong></td></tr>
+          <tr><td>Bookmark</td><td>Makes this record the reference, drawn faintly on the CHART graph. Its card in the list shows a colored bookmark</td></tr>
+          <tr><td>Edit (pencil)</td><td>Add a title and a description (up to 3 lines)</td></tr>
+          <tr><td>Export</td><td>Saves the record as a CSV file in a location you choose</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>To remove the bookmark, <strong>long-press</strong> the colored bookmark on the card in the list.</p>
+
+    <h3>CSV format</h3>
+    <p>One row per second. The file is UTF-8 with a BOM, so it opens in Excel without garbled text. The header row is in Japanese:</p>
+<pre><code>経過秒,時間,温度F(℃),温度S(℃)
+0,00:00,25.3,24.8
+1,00:01,25.4,24.9</code></pre>
+    <p>The columns are elapsed seconds, time (mm:ss), temperature 1 (°C) and temperature 2 (°C).</p>
+
+    <h2 id="setting">6. Settings (SETTING)</h2>
+    <p>The settings screen is in Japanese. The items, from top to bottom:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Graph temperature range</td><td>The temperature range shown on the graph (0–500 °C, in 10 °C steps). Default is 0–230 °C</td></tr>
+          <tr><td>Theme</td><td>System (Android 10 and later), Dark, Light</td></tr>
+          <tr><td>BLE device</td><td>The address of the remembered device, and the name and firmware version of the connected device. Long-press the address row to forget it</td></tr>
+          <tr><td>Device status</td><td>Whether Bluetooth (and Location on Android 11 and earlier) is on</td></tr>
+          <tr><td>7-segment brightness</td><td>Brightness of the thermometer display (0–8). Can be changed only while connected</td></tr>
+          <tr><td>Temperature 1 / 2 calibration</td><td>Corrects an offset in the measured temperature. Enter a value from -5.0 to 5.0 and press the send button. Can be sent only while connected</td></tr>
+          <tr><td>Permissions</td><td>Asks again for any permissions that were not granted</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="trouble">7. Troubleshooting</h2>
+
+    <details>
+      <summary>The Bluetooth button is disabled</summary>
+      <ul>
+        <li>Check that Bluetooth is on.</li>
+        <li>On Android 11 and earlier, turn Location (GPS) on as well.</li>
+        <li>The Device status section in SETTING shows which one is off.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>The device is not found or does not connect</summary>
+      <ul>
+        <li>Check that the FEG2 thermometer is on and close to the phone.</li>
+        <li>Check that the Nearby devices permission is allowed. You can ask for it again from SETTING → Permissions.</li>
+        <li>If you connected to a different thermometer before, the app only searches for that one. Long-press the BLE device row in SETTING to forget it.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>The Save or Reset button is disabled</summary>
+      <p>Both are available only while recording is stopped with ⏸. Save is available only when there is an unsaved record.</p>
+    </details>
+
+    <details>
+      <summary>The temperature is a little off</summary>
+      <p>Use Calibration in SETTING to correct each temperature by up to ±5.0 °C.</p>
+    </details>
+
+    <details>
+      <summary>The graph goes off the screen</summary>
+      <p>Widen the graph temperature range in SETTING.</p>
+    </details>
+
+    <details>
+      <summary>No notification appears</summary>
+      <p>Android 13 and later require the notification permission. Turn it on in the system Settings → Apps → FEG2 → Notifications.</p>
+    </details>
+
+    <p style="margin-top:24px">If this doesn't help, let us know in <a href="https://github.com/bunnmei/FEG2_Android/issues">GitHub Issues</a>.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span class="copyright">© 2026 bunnmei</span>
+      <a href="guide.html">Guide</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="https://github.com/bunnmei/FEG2_Android">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>

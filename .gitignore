@@ -13,4 +13,16 @@
 .externalNativeBuild
 .cxx
 local.properties
-/key.properties
+/key.properties.kotlin
+
+# 署名鍵・秘密情報（公開リポジトリに入れない）
+*.jks
+*.keystore
+*.p12
+keystore.properties
+play-service-account*.json
+
+# ビルド成果物
+/app/release/
+*.aab
+*.apk

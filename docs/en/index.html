@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FEG2 — Graph and log two temperatures</title>
+  <meta name="description" content="An Android app that shows and records two temperatures from an FEG2 thermometer over Bluetooth, as a live graph. Records can be exported as CSV.">
+  <link rel="icon" href="../img/icon.webp">
+  <link rel="alternate" hreflang="ja" href="../ja/">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="./"><img src="../img/icon.webp" alt="">FEG2</a>
+      <nav class="nav">
+        <a href="./" aria-current="page">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+      <a class="lang-switch" href="../ja/" hreflang="ja" lang="ja" data-set-lang="ja"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.08 16zm2.95-8H5.08a7.99 7.99 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>日本語</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img class="hero__icon" src="../img/icon.webp" alt="">
+      <h1>Two temperatures,<br>graphed on your phone.</h1>
+      <p>Connect to an FEG2 thermometer over Bluetooth Low Energy and record both channels once per second.<br>Save records on your device, look back at them, or overlay one as a reference for your next run.</p>
+      <div class="actions">
+        <a class="btn" href="guide.html">Read the guide</a>
+        <a class="btn btn--tonal" href="https://github.com/bunnmei/FEG2_Android">GitHub</a>
+      </div>
+    </section>
+
+    <h2>Features</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Two channels, live</h3>
+        <p>Temperature 1 (pink) and temperature 2 (blue) are shown in large type with the elapsed time, and drawn on the graph as they come in.</p>
+      </div>
+      <div class="card">
+        <h3>Save and review</h3>
+        <p>Save records of up to 30 minutes on your device, and organize them with a title and notes.</p>
+      </div>
+      <div class="card">
+        <h3>Use a past run as a reference</h3>
+        <p>A bookmarked record is drawn faintly behind the live graph, so you can see how this run differs from the last.</p>
+      </div>
+      <div class="card">
+        <h3>CSV export</h3>
+        <p>Save the per-second temperatures as a CSV file that opens directly in Excel and other spreadsheets.</p>
+      </div>
+      <div class="card">
+        <h3>Adjust the device from the app</h3>
+        <p>Change the brightness of the 7-segment display and calibrate each temperature from the app.</p>
+      </div>
+      <div class="card">
+        <h3>Your data stays on the device</h3>
+        <p>The app does not use the internet. All records are stored on your device.</p>
+      </div>
+    </div>
+
+    <h2>Requirements</h2>
+    <ul>
+      <li>A phone or tablet running <strong>Android 8.0 or later</strong> with <strong>Bluetooth Low Energy (BLE)</strong></li>
+      <li>An <strong>FEG2 thermometer</strong> (a device that sends temperatures over BLE)</li>
+    </ul>
+
+    <h2>Pages</h2>
+    <div class="cards">
+      <a class="card" href="guide.html">
+        <h3>Guide</h3>
+        <p>Connecting the device, recording and saving, the log, settings, and troubleshooting.</p>
+      </a>
+      <a class="card" href="privacy.html">
+        <h3>Privacy Policy</h3>
+        <p>How recorded data and permissions are handled.</p>
+      </a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span class="copyright">© 2026 bunnmei</span>
+      <a href="guide.html">Guide</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="https://github.com/bunnmei/FEG2_Android">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>

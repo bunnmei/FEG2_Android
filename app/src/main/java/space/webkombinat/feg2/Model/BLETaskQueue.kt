@@ -4,8 +4,6 @@ import android.Manifest
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
 import java.util.LinkedList
 import java.util.Queue
@@ -39,7 +37,6 @@ class BLETaskQueue(
         commandTask.add(BleCommand.WriteNotif(chara))
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
     fun next() {
         if(isProcessing) return
