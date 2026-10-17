@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.12.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.12.0)" variant="all" version="8.12.0">
+
+    <issue
+        id="MissingPermission"
+        message="Call requires permission which may be rejected by user: code should explicitly check to see if permission is available (with `checkPermission`) or explicitly handle a potential `SecurityException`"
+        errorLine1="                Navigation()"
+        errorLine2="                ~~~~~~~~~~~~">
+        <location
+            file="src/main/java/space/webkombinat/feg2/MainActivity.kt"
+            line="81"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="MissingPermission"
+        message="Call requires permission which may be rejected by user: code should explicitly check to see if permission is available (with `checkPermission`) or explicitly handle a potential `SecurityException`"
+        errorLine1="                SettingScreen(vm = vm)"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/space/webkombinat/feg2/View/Navigation.kt"
+            line="104"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="OldTargetApi"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
+        errorLine1="        targetSdk = 36"
+        errorLine2="        ~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="17"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="SimpleDateFormat"
+        message="To get local formatting use `getDateInstance()`, `getDateTimeInstance()`, or `getTimeInstance()`, or use `new SimpleDateFormat(String template, Locale locale)` with for example `Locale.US` for ASCII dates."
+        errorLine1="            Text(&quot;${SimpleDateFormat(&quot;yyyy/MM/dd HH:mm&quot;).format(createAt)}&quot;)"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/space/webkombinat/feg2/View/Module/ProfileCard.kt"
+            line="100"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="            android:label=&quot;@string/app_name&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="43"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="    android:width=&quot;512dp&quot;"
+        errorLine2="                   ~~~~~">
+        <location
+            file="src/main/res/drawable/graphsvg.xml"
+            line="2"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of Gradle than 8.13 is available: 8.14.6"
+        errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/wrapper/gradle-wrapper.properties"
+            line="4"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.12.0 is available: 9.4.1. (There is also a newer version of 8.12.𝑥 available, if upgrading to 9.4.1 is difficult: 8.12.3)"
+        errorLine1="agp = &quot;8.12.0&quot;"
+        errorLine2="      ~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="2"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.16.0 is available: 1.19.1"
+        errorLine1="coreKtx = &quot;1.16.0&quot;"
+        errorLine2="          ~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="4"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.9.2 is available: 2.11.0"
+        errorLine1="lifecycleRuntimeKtx = &quot;2.9.2&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="8"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity-compose than 1.10.1 is available: 1.13.0"
+        errorLine1="activityCompose = &quot;1.10.1&quot;"
+        errorLine2="                  ~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="9"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose:compose-bom than 2025.07.00 is available: 2026.09.00"
+        errorLine1="composeBom = &quot;2025.07.00&quot;"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="10"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.datastore:datastore-preferences than 1.1.7 is available: 1.2.1"
+        errorLine1="datastore-preferences = &quot;1.1.7&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="13"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-compose than 2.9.3 is available: 2.10.2"
+        errorLine1="navigation-compose = &quot;2.9.3&quot;"
+        errorLine2="                     ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="15"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.hilt:hilt-compiler than 1.2.0 is available: 1.4.0"
+        errorLine1="hilt-navigation-compose = &quot;1.2.0&quot;"
+        errorLine2="                          ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="17"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.hilt:hilt-navigation-compose than 1.2.0 is available: 1.4.0"
+        errorLine1="hilt-navigation-compose = &quot;1.2.0&quot;"
+        errorLine2="                          ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="17"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-compiler than 2.7.2 is available: 2.8.5"
+        errorLine1="room = &quot;2.7.2&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="18"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-ktx than 2.7.2 is available: 2.8.5"
+        errorLine1="room = &quot;2.7.2&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="18"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-runtime than 2.7.2 is available: 2.8.5"
+        errorLine1="room = &quot;2.7.2&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="18"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.devtools.ksp than 2.1.20-2.0.1 is available: 2.3.12"
+        errorLine1="ksp = &quot;2.1.20-2.0.1&quot;"
+        errorLine2="      ~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="19"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.devtools.ksp:symbol-processing-api than 2.1.20-2.0.1 is available: 2.3.12"
+        errorLine1="ksp = &quot;2.1.20-2.0.1&quot;"
+        errorLine2="      ~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="19"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-viewmodel-savedstate than 2.9.2 is available: 2.11.0"
+        errorLine1="saved_state = &quot;2.9.2&quot;"
+        errorLine2="              ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="21"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-service than 2.9.2 is available: 2.11.0"
+        errorLine1="lifecycleService = &quot;2.9.2&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="22"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.android than 2.2.0 is available: 2.4.21"
+        errorLine1="kotlin = &quot;2.2.0&quot;"
+        errorLine2="         ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="3"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.plugin.compose than 2.2.0 is available: 2.4.21"
+        errorLine1="kotlin = &quot;2.2.0&quot;"
+        errorLine2="         ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="3"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger.hilt.android than 2.57 is available: 2.60.1"
+        errorLine1="hilt-android = &quot;2.57&quot;"
+        errorLine2="               ~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="16"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger:hilt-android than 2.57 is available: 2.60.1"
+        errorLine1="hilt-android = &quot;2.57&quot;"
+        errorLine2="               ~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="16"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger:hilt-android-compiler than 2.57 is available: 2.60.1"
+        errorLine1="hilt-android = &quot;2.57&quot;"
+        errorLine2="               ~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="16"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger:hilt-android-gradle-plugin than 2.57 is available: 2.60.1"
+        errorLine1="hilt-android = &quot;2.57&quot;"
+        errorLine2="               ~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="16"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.9.0 is available: 1.11.0"
+        errorLine1="kotlinx-serialization-json = &quot;1.9.0&quot;"
+        errorLine2="                             ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/FEG2_Android/gradle/libs.versions.toml"
+            line="20"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/space/webkombinat/feg2/View/Devide/BottomNavBar.kt"
+            line="32"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `mipmap-anydpi`.">
+        <location
+            file="src/main/res/mipmap-anydpi-v26"/>
+    </issue>
+
+    <issue
+        id="AutoboxingStateCreation"
+        message="Prefer `mutableIntStateOf` instead of `mutableStateOf`"
+        errorLine1="        mutableStateOf(value = BottomNavItem.Chart.number)"
+        errorLine2="        ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/space/webkombinat/feg2/View/Devide/BottomNavBar.kt"
+            line="36"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="AutoboxingStateCreation"
+        message="Prefer `mutableIntStateOf` instead of `mutableStateOf`"
+        errorLine1="    var brightness  by remember { mutableStateOf(userSettings.isBrightness) }"
+        errorLine2="                                  ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/space/webkombinat/feg2/View/Screen/SettingScreen.kt"
+            line="81"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_200` appears to be unused"
+        errorLine1="    &lt;color name=&quot;purple_200&quot;>#FFBB86FC&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="3"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_500` appears to be unused"
+        errorLine1="    &lt;color name=&quot;purple_500&quot;>#FF6200EE&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="4"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_700` appears to be unused"
+        errorLine1="    &lt;color name=&quot;purple_700&quot;>#FF3700B3&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="5"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_200` appears to be unused"
+        errorLine1="    &lt;color name=&quot;teal_200&quot;>#FF03DAC5&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="6"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_700` appears to be unused"
+        errorLine1="    &lt;color name=&quot;teal_700&quot;>#FF018786&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="7"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black` appears to be unused"
+        errorLine1="    &lt;color name=&quot;black&quot;>#FF000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="8"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.white` appears to be unused"
+        errorLine1="    &lt;color name=&quot;white&quot;>#FFFFFFFF&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="9"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_foreground` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_launcher_foreground.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive icon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive roundIcon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+</issues>

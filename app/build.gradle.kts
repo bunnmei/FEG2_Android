@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -14,13 +15,30 @@ android {
         applicationId = "space.webkombinat.feg2"
         minSdk = 26
         targetSdk = 36
-        versionCode = 3
-        versionName = "1.0.0"
+        versionCode = 4
+        // CI (GitHub Actions) ではタグ名 (v1.1.0 → 1.1.0) を使う
+        versionName = System.getenv("VERSION_NAME") ?: "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        // CI では Secrets から復元したキーストアを環境変数で渡す。
+        // ローカルでは Android Studio の「Generate Signed App Bundle」で署名する
+        System.getenv("ANDROID_KEYSTORE_PATH")?.let { path ->
+            create("release") {
+                storeFile = file(path)
+                storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("ANDROID_KEY_ALIAS")
+                keyPassword = System.getenv("ANDROID_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+//            signingConfig = signingConfigs.getByName("release")
+        }
         release {
             isDebuggable = false
             isMinifyEnabled = true
@@ -28,6 +46,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfigs.findByName("release")?.let { signingConfig = it }
         }
     }
     compileOptions {
@@ -40,6 +59,10 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    lint {
+        // 既存の指摘は lint-baseline.xml に記録して、CI では新しく増えた指摘だけを失敗にする
+        baseline = file("lint-baseline.xml")
     }
 }
 

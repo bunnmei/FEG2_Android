@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>使い方 — FEG2</title>
+  <meta name="description" content="FEG2 の使い方。デバイスとのつなぎ方、温度の記録と保存、ログ・CSV 書き出し、設定、困ったときの対処法。">
+  <link rel="icon" href="../img/icon.webp">
+  <link rel="alternate" hreflang="en" href="../en/guide.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="./"><img src="../img/icon.webp" alt="">FEG2</a>
+      <nav class="nav">
+        <a href="./">ホーム</a>
+        <a href="guide.html" aria-current="page">使い方</a>
+        <a href="privacy.html">プライバシー</a>
+      </nav>
+      <a class="lang-switch" href="../en/guide.html" hreflang="en" lang="en" data-set-lang="en"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.08 16zm2.95-8H5.08a7.99 7.99 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>English</a>
+    </div>
+  </header>
+
+  <main>
+    <h1 class="page-title">使い方</h1>
+    <p class="page-meta">FEG2 ／ Android 8.0 以降</p>
+
+    <div class="summary">
+      <p><strong>基本の流れ：</strong>Bluetooth ボタンでデバイスにつなぐ → ▶ で記録開始 → ⏸ で止めて保存ボタン → 「LOG」タブで見返す。</p>
+    </div>
+
+    <nav class="toc" aria-label="目次">
+      <div class="toc__title">このページの内容</div>
+      <ol>
+        <li><a href="#prepare">はじめに（権限と Bluetooth）</a></li>
+        <li><a href="#connect">デバイスにつなぐ</a></li>
+        <li><a href="#record">温度を記録する</a></li>
+        <li><a href="#screen">CHART 画面の見方</a></li>
+        <li><a href="#log">記録を見返す（LOG）</a></li>
+        <li><a href="#setting">設定（SETTING）</a></li>
+        <li><a href="#trouble">困ったときは</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="prepare">1. はじめに（権限と Bluetooth）</h2>
+    <ol class="steps">
+      <li><strong>アプリを開いて、権限を許可する</strong>初めて開くと、「付近のデバイス」「通知」などの許可を求められます。デバイスを探してつなぐのに必要なので、許可してください。</li>
+      <li><strong>Bluetooth をオンにする</strong>Bluetooth がオフのあいだは、つなぐボタンが押せません。</li>
+      <li><strong>（Android 11 以前のみ）位置情報をオンにする</strong>Android 11 以前では、Bluetooth の機器を探すのに端末の位置情報（GPS）がオンになっている必要があります。位置情報そのものは使いません。</li>
+    </ol>
+    <p>許可しなかった権限は、あとから「SETTING」タブの「パーミッション」→「権限をリクエスト」で求め直せます。</p>
+
+    <h2 id="connect">2. デバイスにつなぐ</h2>
+    <ol class="steps">
+      <li><strong>FEG2 温度計の電源を入れる</strong></li>
+      <li><strong>「CHART」タブで、左下の「＋」ボタンを押す</strong>操作ボタン（Bluetooth・▶・保存・リセット）が上に並びます。</li>
+      <li><strong>Bluetooth ボタンを押す</strong>アイコンが変わってデバイスを探し始め、見つかると自動でつながります。つながると、画面右上に温度が表示されます。</li>
+    </ol>
+    <div class="callout">
+      <span class="callout__title">一度つないだデバイスは覚えておきます</span>
+      <p>初めてつないだデバイスを覚えておき、次からはそのデバイスにだけつなぎます。別のデバイスに替えたいときは、「SETTING」タブの「BLE デバイス」の欄を<strong>長押し</strong>して解除してください。</p>
+    </div>
+    <p>つないでいるときにもう一度 Bluetooth ボタンを押すと切断します。探している途中に押すと、探すのをやめます。</p>
+
+    <h2 id="record">3. 温度を記録する</h2>
+    <ol class="steps">
+      <li><strong>▶ ボタンで記録を始める</strong>ストップウォッチが動き出し、1 秒ごとに 2 つの温度をグラフに描いていきます。</li>
+      <li><strong>⏸ ボタンで止める</strong>もう一度 ▶ を押すと、続きから記録を再開します。</li>
+      <li><strong>保存ボタン（↓）で保存する</strong>止めているときだけ押せます。「保存中」と出て、終わると「LOG」タブの一覧に追加されます。</li>
+      <li><strong>リセットボタン（↻）で次の記録へ</strong>止めているときに押すと、時間とグラフが消えて最初からになります。保存していない記録も消えるので注意してください。</li>
+    </ol>
+    <div class="callout callout--warn">
+      <span class="callout__title">記録は最大 30 分です</span>
+      <p>30 分たつと記録は自動で止まり、そこまでの記録が保存されます。</p>
+    </div>
+    <p>記録中はアプリを閉じても（バックグラウンドにしても）記録が続き、通知欄に経過時間と温度が表示されます。通知の「停止」を押すと、デバイスを切断して記録を終わります。このとき<strong>保存していない記録は消えます</strong>。</p>
+
+    <h2 id="screen">4. CHART 画面の見方</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>場所</th><th>表示されるもの</th></tr></thead>
+        <tbody>
+          <tr><td>右上</td><td>経過時間（灰色）、温度-1（ピンク）、温度-2（青）</td></tr>
+          <tr><td>左端</td><td>温度の目盛り（範囲は「SETTING」で変更できます）</td></tr>
+          <tr><td>下</td><td>時間の目盛り。グラフは横にスクロールできます</td></tr>
+          <tr><td>グラフの薄い線</td><td>ブックマークした記録（お手本）。<a href="#log">LOG</a> で設定します</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>画面の何もないところをタップすると、下のタブと操作ボタンを隠してグラフを広く表示できます。もう一度タップすると戻ります。</p>
+
+    <h2 id="log">5. 記録を見返す（LOG）</h2>
+    <p>「LOG」タブに、保存した記録がカードで並びます。カードを押すと、その記録のグラフが開きます。右側のボタンでは次のことができます。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ボタン</th><th>できること</th></tr></thead>
+        <tbody>
+          <tr><td>削除（ゴミ箱）</td><td>この記録を削除します。<strong>確認なしですぐ削除される</strong>ので注意してください</td></tr>
+          <tr><td>ブックマーク</td><td>この記録を「お手本」にします。CHART 画面のグラフに薄く重ねて表示されます。一覧のカードのブックマークが色付きになります</td></tr>
+          <tr><td>編集（鉛筆）</td><td>タイトルと説明（3 行まで）を付けられます</td></tr>
+          <tr><td>書き出し</td><td>CSV ファイルとして保存します。保存先は選べます</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>ブックマークを外すときは、一覧のカードの色付きのブックマークを<strong>長押し</strong>します。</p>
+
+    <h3>CSV ファイルの中身</h3>
+    <p>1 秒ごとに 1 行です。文字コードは UTF-8（BOM 付き）なので、Excel でダブルクリックしても文字化けしません。</p>
+<pre><code>経過秒,時間,温度F(℃),温度S(℃)
+0,00:00,25.3,24.8
+1,00:01,25.4,24.9</code></pre>
+    <p>「温度F」が温度-1、「温度S」が温度-2 です。</p>
+
+    <h2 id="setting">6. 設定（SETTING）</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>グラフの温度</td><td>グラフに表示する温度の範囲（0〜500 ℃、10 ℃ 刻み）。最初は 0〜230 ℃</td></tr>
+          <tr><td>テーマ</td><td>システム（Android 10 以降）・ダーク・ライト</td></tr>
+          <tr><td>BLE デバイス</td><td>覚えているデバイスのアドレスと、つないでいるデバイスの名前・ファームウェアのバージョン。アドレスの欄を長押しすると解除</td></tr>
+          <tr><td>デバイスの状態</td><td>Bluetooth（Android 11 以前は位置情報も）がオンになっているか</td></tr>
+          <tr><td>7 セグの明るさ</td><td>温度計の表示の明るさ（0〜8）。つないでいるときだけ変えられます</td></tr>
+          <tr><td>温度-1 / 温度-2 キャリブレーション</td><td>表示される温度のずれを補正します。-5.0〜5.0 の数値を入れて送信ボタンを押します。つないでいるときだけ送れます</td></tr>
+          <tr><td>パーミッション</td><td>許可していない権限を、もう一度求めます</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="trouble">7. 困ったときは</h2>
+
+    <details>
+      <summary>Bluetooth ボタンが押せない</summary>
+      <ul>
+        <li>端末の Bluetooth がオンになっているか確認してください。</li>
+        <li>Android 11 以前では、位置情報（GPS）もオンにしてください。</li>
+        <li>「SETTING」タブの「デバイスの状態」で、どれがオフになっているか確認できます。</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>デバイスが見つからない・つながらない</summary>
+      <ul>
+        <li>FEG2 温度計の電源が入っているか、スマホの近くにあるか確認してください。</li>
+        <li>「付近のデバイス」の権限を許可しているか確認してください。「SETTING」→「パーミッション」から求め直せます。</li>
+        <li>前に別の温度計をつないでいた場合は、その温度計しか探しません。「SETTING」→「BLE デバイス」の欄を長押しして解除してください。</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>保存ボタン・リセットボタンが押せない</summary>
+      <p>どちらも、記録を ⏸ で止めているときだけ押せます。保存ボタンは、まだ保存していない記録があるときだけ押せます。</p>
+    </details>
+
+    <details>
+      <summary>表示される温度が実際とずれる</summary>
+      <p>「SETTING」の「キャリブレーション」で、温度-1・温度-2 それぞれのずれを ±5.0 ℃ まで補正できます。</p>
+    </details>
+
+    <details>
+      <summary>グラフの線が画面からはみ出る</summary>
+      <p>「SETTING」の「グラフの温度」で、表示する温度の範囲を広げてください。</p>
+    </details>
+
+    <details>
+      <summary>通知が出ない</summary>
+      <p>Android 13 以降では通知の許可が必要です。端末の「設定」→「アプリ」→「FEG2」→「通知」からオンにできます。</p>
+    </details>
+
+    <p style="margin-top:24px">解決しないときは <a href="https://github.com/bunnmei/FEG2_Android/issues">GitHub の Issues</a> で教えてください。</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span class="copyright">© 2026 bunnmei</span>
+      <a href="guide.html">使い方</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="https://github.com/bunnmei/FEG2_Android">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>
